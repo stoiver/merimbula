@@ -106,18 +106,10 @@ t0 = time.time()
 yieldstep = 60*60
 finaltime = 3600*24*10
 
-#from anuga.visualiser import RealtimeVisualiser
-#vis = RealtimeVisualiser(domain)
-#vis.render_quantity_height("elevation", zScale=100, offset = 5.0, dynamic=False)
-#vis.render_quantity_height("stage", zScale =100, dynamic=True, opacity = 0.3)
-#vis.colour_height_quantity('stage', (lambda q:q['stage'], -0.5, 0.5))
-#vis.start()
 
 
 for t in domain.evolve(yieldstep = yieldstep, finaltime = finaltime):
     domain.write_time()
-    #vis.update()
-    
-#vis.evolveFinished()
+
 
 print 'That took %.2f seconds' %(time.time()-t0)

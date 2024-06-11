@@ -54,7 +54,7 @@ weed_zones = [
 print('Read weed zone polygons')
 weed_polygons = {}
 for zone in weed_zones:
-    weed_polygons[zone] = read_polygon('../Weed_Zones/'+zone, delimiter=" ")
+    weed_polygons[zone] = read_polygon('../weed_zones/'+zone, delimiter=" ")
 
 import pprint
 

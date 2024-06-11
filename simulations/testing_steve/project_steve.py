@@ -2,6 +2,14 @@
 """
 import anuga
 
+from datetime import datetime
+
+now = datetime.now() # current date and time
+
+date_time = now.strftime("%Y%m%d_%H%M%S")
+
+print("date and time:",date_time)
+
 model_dir = '../../model_data_sept_2003'
 mesh_dir  = '../../meshes'
 
@@ -14,7 +22,4 @@ bathymetry_filename        = anuga.join(mesh_dir,'merimbula_bathymetry.xya')
 mesh_filename              = anuga.join(mesh_dir,'merimbula_10785.tsh')
 
 depth_canal = 4
-simulation_name            = 'domain_10785_canal_%i' % depth_canal
-
-
-
+simulation_name            = f'domain_10785_canal_{depth_canal}_{date_time}'

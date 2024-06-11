@@ -1,21 +1,14 @@
 """
 Main meribula script using new interface
 """
-
+#%%
 #-------------------------------
 # Module imports
 #-------------------------------
-import sys, os
-from pyvolution.shallow_water import Domain, Reflective_boundary,\
-     File_boundary, Transmissive_Momentum_Set_Stage_boundary,\
-     Wind_stress
-from pyvolution.util import file_function
-from pyvolution.mesh_factory import rectangular_cross
-from pyvolution.pmesh2domain import pmesh_to_domain_instance
-from utilities.polygon import Polygon_function, read_polygon
-from Numeric import array, zeros, Float, allclose
+import sys, os, anuga
+import numpy as np
 import project
-from caching import cache
+
 
 
 
@@ -23,22 +16,18 @@ from caching import cache
 #-------------------------------
 # Domain
 #-------------------------------
-print 'Creating domain from', project.mesh_filename
+print ('Creating domain from', project.mesh_filename)
 
-domain = cache(pmesh_to_domain_instance,
-               (project.mesh_filename, Domain),
-               dependencies = [project.mesh_filename])
+domain = anuga.Domain(project.mesh_filename)
 
 domain.check_integrity()
-print 'Number of triangles = ', len(domain)
-print 'The extent is ', domain.get_extent()
-
-
+print ('Number of triangles = ', len(domain))
+print ('The extent is ', domain.get_extent())
 
 #-------------------------------
 # Initial Conditions
 #-------------------------------
-print 'Initial values'
+print ('Initial values')
 
 domain.set_quantity('elevation',
                     filename = project.bathymetry_filename[:-4] + '.xya',
@@ -54,14 +43,14 @@ domain.set_quantity('stage', 0.0)
 def image_points_to_northing_eastings(points):
     #print points
     n = len(points)
-    #print n
+
     z = []
     for i in range(n):
         #print i
         z.append([0,0])
         z[i][0] = 755471.4 + (points[i][0] + 3250.)/1.125
         z[i][1] = 5910260.0 + (points[i][1] + 1337.)/1.12
-    #print z
+
     return z
 
 #------------------------------------------
@@ -165,12 +154,12 @@ domain.set_quantity('friction',Polygon_function([  \
 #-------------------------------
 # Boundary conditions
 #-------------------------------
-print 'Boundaries'
+print ('Boundaries')
 
 #   Tidal cycle recorded at Eden as open
-print 'Open sea boundary condition from ',project.boundary_filename
-from pyvolution.util import file_function
-tide_function = file_function(project.boundary_filename[:-4] + '.tms', domain,
+print ('Open sea boundary condition from ',project.boundary_filename)
+
+tide_function = anuga.file_function(project.boundary_filename[:-4] + '.tms', domain,
                          verbose = True)
 Bts = Transmissive_Momentum_Set_Stage_boundary(domain, tide_function)
 
@@ -182,15 +171,9 @@ domain.set_boundary({'exterior': Br, 'open': Bts})
 #-------------------------------
 # Setup domain runtime parameters
 #-------------------------------
-domain.visualise = False
-domain.visualise_color_stage = True
 
 base = os.path.basename(sys.argv[0])
 domain.filename, _ = os.path.splitext(base)
-domain.default_order = 2
-domain.store = True    #Store for visualisation purposes
-
-
 
 #-------------------------------
 # Evolve
@@ -203,6 +186,7 @@ finaltime = 60
 
 for t in domain.evolve(yieldstep = yieldstep, finaltime = finaltime):
     domain.write_time()
-    print wind(t)
 
-print 'That took %.2f seconds' %(time.time()-t0)
+print ('That took %.2f seconds' %(time.time()-t0))
+
+# %%

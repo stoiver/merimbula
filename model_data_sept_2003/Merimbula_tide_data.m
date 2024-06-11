@@ -10,7 +10,7 @@ text(-400,350,desc)
 
 date = '09-21-2003'
 
-load Site00tide
+load Site00tide.txt
 
 x = Site00tide(:,1)-265;
 y = Site00tide(:,2);
@@ -25,7 +25,7 @@ axis([datenum('09/23/2003') datenum('12/01/2003') -1.5 1.5])
 set(gca,'XTick',XTick)
 hold on
 
-load Site02tide
+load Site02tide.txt
 
 x = Site02tide(:,1)-265;
 y = Site02tide(:,2);
@@ -38,7 +38,7 @@ hold on
 axis([datenum('09/23/2003') datenum('12/01/2003') -1.5 1.5])
 set(gca,'XTick',XTick)
 
-load Site03tide
+load Site03tide.txt
 
 x = Site03tide(:,1)-265;
 y = Site03tide(:,2);
@@ -51,7 +51,7 @@ hold on
 axis([datenum('09/23/2003') datenum('12/01/2003') -1.5 1.5])
 set(gca,'XTick',XTick)
 
-load Site05tide
+load Site05tide.txt
 
 x = Site05tide(:,1)-265;
 y = Site05tide(:,2);
@@ -64,7 +64,7 @@ hold on
 axis([datenum('09/23/2003') datenum('12/01/2003') -1.5 1.5])
 set(gca,'XTick',XTick)
 
-load Site06tide
+load Site06tide.txt
 
 x = Site06tide(:,1)-265;
 y = Site06tide(:,2);
@@ -77,7 +77,7 @@ hold on
 axis([datenum('09/23/2003') datenum('12/01/2003') -1.5 1.5])
 set(gca,'XTick',XTick)
 
-load Site05tide
+load Site05tide.txt
 
 x = Site05tide(:,1)-265;
 y = Site05tide(:,2);
@@ -90,7 +90,7 @@ hold on
 axis([datenum('09/23/2003') datenum('12/01/2003') -1.5 1.5])
 set(gca,'XTick',XTick)
 
-load Site07tide
+load Site07tide.txt
 
 x = Site07tide(:,1)-265;
 y = Site07tide(:,2);
@@ -103,7 +103,7 @@ hold on
 axis([datenum('09/23/2003') datenum('12/01/2003') -1.5 1.5])
 set(gca,'XTick',XTick)
 
-load Site08tide
+load Site08tide.txt
 
 x = Site08tide(:,1)-265;
 y = Site08tide(:,2);
