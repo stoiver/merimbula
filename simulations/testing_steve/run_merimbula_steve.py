@@ -14,36 +14,60 @@ import project_steve as project
 #-------------------------------
 print ('Creating domain from', project.mesh_filename)
 
-domain = anuga.pmesh_to_domain_instance(project.mesh_filename, anuga.Domain, use_cache=True)
+if anuga.myid == 0:
+    print ('Creating domain from', project.mesh_filename)
 
-domain.check_integrity()
+    domain = anuga.pmesh_to_domain_instance(project.mesh_filename, anuga.Domain, use_cache=True)
 
+    domain.set_name(project.simulation_name)
+    domain.check_integrity()
+
+    print ('Number of triangles = ', len(domain))
+    print ('The extent is ', domain.get_extent())
+
+
+    #-------------------------------
+    # Initial Conditions
+    #-------------------------------
+
+    #elevation_offset=0.1
+
+    print ('Initial values')
+    bathymetry_filename =  project.bathymetry_filename[:-4] + '.xya'
+
+    print (bathymetry_filename)
+
+    domain.set_quantity('elevation',
+                        filename = bathymetry_filename,
+                        alpha = 0.5,
+                        verbose = True,
+                        use_cache = True)
+
+    #domain.set_quantity('elevation',expression='elevation +%f' %elevation_offset)
+    domain.set_quantity('friction', 0.01)
+    domain.set_quantity('stage', 0.0)
+
+else:
+    domain = None
+
+domain = anuga.distribute(domain)
+
+#-------------------------------
+# Setup domain runtime parameters
+#-------------------------------
+
+domain.store = True    #Store for visualisation purposes
+domain.smooth = False
 domain.set_low_froude(1)
 domain.set_flow_algorithm('DE1')
 
 
-print ('Number of triangles = ', len(domain))
-print ('The extent is ', domain.get_extent())
+
 
 print ('stats')
 print (domain.statistics())
 
-#-------------------------------
-# Initial Conditions
-#-------------------------------
 
-#elevation_offset=0.1
-
-print ('Initial values')
-bathymetry_filename =  project.bathymetry_filename[:-4] + '.xya'
-
-print (bathymetry_filename)
-
-domain.set_quantity('elevation',
-                    filename = bathymetry_filename,
-                    alpha = 0.5,
-                    verbose = True,
-                    use_cache = True)
 
 
 # dredge out the canal
@@ -68,9 +92,7 @@ domain.set_quantity('elevation',
 
 
 
-#domain.set_quantity('elevation',expression='elevation +%f' %elevation_offset)
-domain.set_quantity('friction', 0.01)
-domain.set_quantity('stage', 0.0)
+
 
 #-------------------------------
 # Boundary conditions
@@ -100,12 +122,7 @@ Br = anuga.Reflective_boundary(domain)
 
 domain.set_boundary({'exterior': Br, 'open': Bt})
 
-#-------------------------------
-# Setup domain runtime parameters
-#-------------------------------
-domain.set_name(project.simulation_name)
-domain.store = True    #Store for visualisation purposes
-domain.smooth = False
+
 
 #-------------------------------
 # Evolve
@@ -118,10 +135,20 @@ hr  = 60*min
 yieldstep = 1*min
 finaltime = 24*hr
 
+try:
+    tid = domain.get_triangle_containing_point([ 760951.44544767, 5912173.85974667])
+except:
+    tid = None
+
+print (tid)
+#print (domain.centroid_coordinates[9433])
+
 
 for t in domain.evolve(yieldstep = yieldstep, finaltime = finaltime):
-    domain.write_time()
-    print (tide_function(domain.get_time())[0],' ',domain.get_conserved_quantities(9433, edge=0)[0])
-
+        
+    #domain.write_time()
+    if tid is not None:
+        print (domain.timestepping_statistics())
+        print (tide_function(t)[0], domain.get_quantity('stage').centroid_values[tid])
 
 print ('That took %.2f seconds' %(time.time()-t0))
