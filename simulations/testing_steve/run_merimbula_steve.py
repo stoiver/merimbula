@@ -18,6 +18,9 @@ domain = anuga.pmesh_to_domain_instance(project.mesh_filename, anuga.Domain, use
 
 domain.check_integrity()
 
+domain.set_low_froude(1)
+domain.set_flow_algorithm('DE1')
+
 
 print ('Number of triangles = ', len(domain))
 print ('The extent is ', domain.get_extent())
@@ -66,7 +69,7 @@ domain.set_quantity('elevation',
 
 
 #domain.set_quantity('elevation',expression='elevation +%f' %elevation_offset)
-domain.set_quantity('friction', 0.0)
+domain.set_quantity('friction', 0.01)
 domain.set_quantity('stage', 0.0)
 
 #-------------------------------
