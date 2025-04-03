@@ -12,7 +12,6 @@ import project_steve as project
 #-------------------------------
 # Domain
 #-------------------------------
-print ('Creating domain from', project.mesh_filename)
 
 if anuga.myid == 0:
     print ('Creating domain from', project.mesh_filename)
@@ -132,15 +131,16 @@ t0 = time.time()
 sec = 1.0
 min = 60*sec
 hr  = 60*min
+day = 24*hr
 yieldstep = 1*min
-finaltime = 24*hr
+finaltime = 5*min
 
 try:
     tid = domain.get_triangle_containing_point([ 760951.44544767, 5912173.85974667])
 except:
     tid = None
 
-print (tid)
+print (f'Triangle id next to middle of tide: {tid}')
 #print (domain.centroid_coordinates[9433])
 
 
@@ -148,7 +148,7 @@ for t in domain.evolve(yieldstep = yieldstep, finaltime = finaltime):
         
     #domain.write_time()
     if tid is not None:
-        print (domain.timestepping_statistics())
-        print (tide_function(t)[0], domain.get_quantity('stage').centroid_values[tid])
+        print (domain.timestepping_statistics(datetime = True))
+        print (f'    Tide {tide_function(t)[0]:.3f}, Mid Boundary Stage {domain.get_quantity("stage").centroid_values[tid]:.3f}, ')
 
 print ('That took %.2f seconds' %(time.time()-t0))
