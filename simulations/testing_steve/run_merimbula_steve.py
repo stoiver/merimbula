@@ -63,7 +63,7 @@ domain.set_flow_algorithm('DE1')
 
 
 
-print ('stats')
+print (f'Stats for domain on rank {anuga.myid}')
 print (domain.statistics())
 
 
@@ -96,17 +96,19 @@ print (domain.statistics())
 #-------------------------------
 # Boundary conditions
 #-------------------------------
-print ('Boundaries')
+if anuga.myid == 0: 
+    print ('Boundaries')
 
 #----------------------------------------
 #   Tidal cycle recorded at Eden as open
 #----------------------------------------
-print ('Open sea boundary condition from ',project.boundary_filename)
+if anuga.myid == 0:
+    print ('Open sea boundary condition from ',project.boundary_filename)
 
 
 
 tide_function = anuga.file_function(project.boundary_filename[:-4] + '.tms', domain,
-                         verbose = True)
+                         verbose = False)
 
 
 
@@ -143,12 +145,47 @@ except:
 print (f'Triangle id next to middle of tide: {tid}')
 #print (domain.centroid_coordinates[9433])
 
+anuga.barrier()
+
+if anuga.myid == 0:
+    print (' ')
+    print ('#',60*'=')
+    print ('#','Evolving domain')
+    print ('#','Yield step = ', yieldstep)
+    print ('#','Final time = ', finaltime)
+    print ('#',60*'=')
+    print (' ')
+#===========================================================================
+# Main Evolve Loop
+#===========================================================================
 
 for t in domain.evolve(yieldstep = yieldstep, finaltime = finaltime):
         
-    #domain.write_time()
+    # This only happens on processor that owns the triangle.
     if tid is not None:
         print (domain.timestepping_statistics(datetime = True))
-        print (f'    Tide {tide_function(t)[0]:.3f}, Mid Boundary Stage {domain.get_quantity("stage").centroid_values[tid]:.3f}, ')
+        print (f'    Tide {tide_function(t)[0]:.3f}, Mid Boundary Stage {domain.get_quantity("stage").centroid_values[tid]:.3f} ')
+        sys.stdout.flush()
 
-print ('That took %.2f seconds' %(time.time()-t0))
+anuga.barrier()
+
+if anuga.myid == 0:
+    print (f'That took {(time.time()-t0):.2f} seconds on {anuga.numprocs} processors')
+
+
+anuga.barrier()
+
+
+if anuga.numprocs > 1:
+
+    if anuga.myid == 0:
+        print (' ')
+        print ('#',60*'=')
+        print ('#','Merging partitioned sww files')
+        print ('#',60*'=')
+        print (' ')
+        
+    domain.sww_merge(delete_old=True)
+
+anuga.finalize()
+
