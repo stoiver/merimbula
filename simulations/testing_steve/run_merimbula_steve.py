@@ -185,7 +185,7 @@ if anuga.numprocs > 1:
         print ('#',60*'=')
         print (' ')
         
-    domain.sww_merge(delete_old=True)
+    #domain.sww_merge(delete_old=True)
 
 anuga.finalize()
 
