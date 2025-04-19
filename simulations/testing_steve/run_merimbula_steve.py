@@ -134,8 +134,8 @@ sec = 1.0
 min = 60*sec
 hr  = 60*min
 day = 24*hr
-yieldstep = 1*min
-finaltime = 5*min
+yieldstep = 5*min
+finaltime = 15*min
 
 try:
     tid = domain.get_triangle_containing_point([ 760951.44544767, 5912173.85974667])
@@ -151,6 +151,9 @@ if anuga.myid == 0:
     print (' ')
     print ('#',60*'=')
     print ('#','Evolving domain')
+    print ('#',60*'=')
+    print ('#','Number of processors = ', anuga.numprocs)
+    print ('#','Multiprocessor Mode = ', domain.multiprocessor_mode)
     print ('#','Yield step = ', yieldstep)
     print ('#','Final time = ', finaltime)
     print ('#',60*'=')
