@@ -59,7 +59,7 @@ domain.store = True    #Store for visualisation purposes
 domain.smooth = False
 domain.set_low_froude(1)
 domain.set_flow_algorithm('DE1')
-
+domain.set_multiprocessor_mode(2)
 
 
 
