@@ -12,6 +12,7 @@ print("date and time:",date_time)
 
 model_dir = '../../model_data_sept_2003'
 mesh_dir  = '../../meshes'
+weed_dir  = '../../weed_zones'
 
 original_boundary_filename = anuga.join(model_dir,'Eden_tide_Sept03.dat')
 original_wind_filename     = anuga.join(model_dir,'merimbula_wind_sept_2003.dat')

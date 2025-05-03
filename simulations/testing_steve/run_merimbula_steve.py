@@ -59,8 +59,10 @@ domain.store = True    #Store for visualisation purposes
 domain.smooth = False
 domain.set_low_froude(1)
 domain.set_flow_algorithm('DE1')
-
-
+try:
+    domain.set_multiprocessor_mode(2)
+except:
+    pass
 
 
 print (f'Stats for domain on rank {anuga.myid}')
