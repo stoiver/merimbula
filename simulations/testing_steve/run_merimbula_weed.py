@@ -103,6 +103,7 @@ c = 0.065
 #   Strap weed
 b = 0.040
 
+
 #-----------------------------------------------
 #   Set the whole region to a constant value
 #-----------------------------------------------
@@ -171,6 +172,22 @@ domain.set_quantity('friction',anuga.Polygon_function([  \
       (weed_zone4,   b), (weed_zone39, b), (weed_zone28, r), (weed_zone29, b), \
       (weed_zone30,  b), (weed_zone5,  b), (weed_zone11, b), (weed_zone14, b) ]), location='centroids')
 
+
+
+# domain.set_plotter()
+# import matplotlib.pyplot as plt
+
+# import matplotlib.cm as cm
+# import numpy as np
+
+# domain.tripcolor(
+#               facecolors=np.sqrt(domain.stage - domain.elev),
+#               cmap=cm.viridis,  # A visually appealing colormap
+#               vmin=0.0,
+#               vmax=2.0  # Adjusted to cover the range of friction values
+#               )
+# plt.colorbar()
+# plt.show()
 
 # dredge out the canal
 
