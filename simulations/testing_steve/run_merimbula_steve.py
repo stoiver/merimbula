@@ -13,6 +13,7 @@ import project_steve as project
 # Domain
 #-------------------------------
 
+
 if anuga.myid == 0:
     print ('Creating domain from', project.mesh_filename)
 
@@ -23,6 +24,8 @@ if anuga.myid == 0:
 
     print ('Number of triangles = ', len(domain))
     print ('The extent is ', domain.get_extent())
+
+  
 
 
     #-------------------------------
@@ -148,11 +151,18 @@ print (f'Triangle id next to middle of tide: {tid}')
 anuga.barrier()
 
 if anuga.myid == 0:
+    import os
+    num_threads = os.environ.get('OMP_NUM_THREADS')
+    if num_threads is not None:
+        num_threads = int(num_threads)
+    else:
+        num_theads = 1     
     print (' ')
     print ('#',60*'=')
     print ('#','Evolving domain')
     print ('#',60*'=')
-    print ('#','Number of processors = ', anuga.numprocs)
+    print ('#','Number of MPI processes = ', anuga.numprocs)
+    print ('#','Number of OPENMP threads = ', num_threads)
     print ('#','Multiprocessor Mode = ', domain.multiprocessor_mode)
     print ('#','Yield step = ', yieldstep)
     print ('#','Final time = ', finaltime)
@@ -173,7 +183,7 @@ for t in domain.evolve(yieldstep = yieldstep, finaltime = finaltime):
 anuga.barrier()
 
 if anuga.myid == 0:
-    print (f'That took {(time.time()-t0):.2f} seconds on {anuga.numprocs} processors')
+    print (f'That took {(time.time()-t0):.2f} seconds on {anuga.numprocs} MPI processes and {num_threads} OPENMP threads')
 
 
 anuga.barrier()
