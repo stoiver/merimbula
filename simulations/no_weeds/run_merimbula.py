@@ -252,12 +252,7 @@ domain.set_boundary({'exterior': Br, 'open': Bt})
 #-------------------------------
 import time
 t0 = time.time()
-sec = 1.0
-min = 60*sec
-hr  = 60*min
-day = 24*hr
-yieldstep = 5*min
-finaltime = 15*min
+
 
 try:
     tid = domain.get_triangle_containing_point([ 760951.44544767, 5912173.85974667])
@@ -284,6 +279,7 @@ if anuga.myid == 0:
     print ('#','Number of OPENMP threads = ', num_threads)
     print ('#','Multiprocessor Mode = ', domain.multiprocessor_mode)
     print ('#','Yield step = ', yieldstep)
+    print ('#','Output step = ', outputstep)
     print ('#','Final time = ', finaltime)
     print ('#',60*'=')
     print (' ')
@@ -291,7 +287,7 @@ if anuga.myid == 0:
 # Main Evolve Loop
 #===========================================================================
 
-for t in domain.evolve(yieldstep = yieldstep, finaltime = finaltime):
+for t in domain.evolve(yieldstep = yieldstep, outputstep = outputstep, finaltime = finaltime):
         
     # This only happens on processor that owns the triangle.
     if tid is not None:
