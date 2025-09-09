@@ -13,10 +13,12 @@ print("date and time:",date_time)
 mesh_size = 10785
 #mesh_size = 43200
 
+model_date = 'sept_2003'
+
 depth_canal = 4
 simulation_dir           = 'no_weeds_datetime'
 
-model_dir = '../../model_data_sept_2003'
+model_dir = f'../../model_data_{model_date}'
 mesh_dir  = '../../meshes'
 weed_dir  = '../../weed_zones'
 
@@ -28,7 +30,7 @@ bathymetry_filename        = anuga.join(mesh_dir,'merimbula_bathymetry.xya')
 
 mesh_filename              = anuga.join(mesh_dir,f'merimbula_{mesh_size}.tsh')
 
-simulation_name            = f'{simulation_dir}_10785_canal_{depth_canal}_{date_time}'
+simulation_name            = f'{simulation_dir}_{model_date}_{mesh_size}_{depth_canal}_{date_time}'
 
 sec = 1.0
 min = 60*sec

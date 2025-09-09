@@ -14,6 +14,9 @@ import anuga
 import project
 from project import yieldstep, outputstep, duration
 
+from anuga import log
+log.log_filename = 'run_merimbula.log'
+
 weed_dir = project.weed_dir
 
 #-------------------------------
