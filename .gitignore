@@ -1,0 +1,7 @@
+*.log
+*.pstat
+*.sww
+*.csv
+*.pyc
+.ipynb_checkpoints
+_plot
