@@ -13,6 +13,7 @@ from scipy.interpolate import interp1d
 import anuga
 import project
 from project import yieldstep, outputstep, duration
+from project import weeds, canal, depth_canal
 
 from anuga import log
 log.log_filename = 'run_merimbula.log'
@@ -79,9 +80,9 @@ print (f'Stats for domain on rank {anuga.myid}')
 print (domain.statistics())
 
 
-from weed_zones import set_friction_from_weed_zones
-
-set_friction_from_weed_zones(domain, weed_dir)
+if weeds:
+    from weed_zones import set_friction_from_weed_zones
+    set_friction_from_weed_zones(domain, weed_dir)
 
 # domain.set_plotter()
 # import matplotlib.pyplot as plt
@@ -101,20 +102,20 @@ set_friction_from_weed_zones(domain, weed_dir)
 #--------------------------------
 # dredge out the canal
 #--------------------------------
+if canal:
+    canal_polygon = [[759222.474012,5912903.796898],
+            [759191.946009,5912861.297128],
+            [759224.269777,5912866.684423],
+            [759242.100000,5912879.000000],
+            [759252.700000,5912892.000000],
+            [759256.593546,5912915.170076],
+            [759242.826015,5912939.113609],
+            [759228.000000,5912954.000000],
+            [759209.600000,5912931.000000],
+            [759193.800000,5912906.000000],
+            [759170.000000,5912890.000000]]
 
-canal_polygon = [[759222.474012,5912903.796898],
-          [759191.946009,5912861.297128],
-          [759224.269777,5912866.684423],
-          [759242.100000,5912879.000000],
-          [759252.700000,5912892.000000],
-          [759256.593546,5912915.170076],
-          [759242.826015,5912939.113609],
-          [759228.000000,5912954.000000],
-          [759209.600000,5912931.000000],
-          [759193.800000,5912906.000000],
-          [759170.000000,5912890.000000]]
-
-domain.set_quantity('elevation',numeric = -4.0,
+    domain.set_quantity('elevation',numeric = -depth_canal,
                    polygon = canal_polygon,
                    smooth = True,
                    verbose = True,
@@ -160,7 +161,6 @@ Br = anuga.Reflective_boundary(domain)
 Bt = anuga.Transmissive_n_momentum_zero_t_momentum_set_stage_boundary(domain, function = tide_function)
 
 domain.set_boundary({'exterior': Br, 'open': Bt})
-
 
 
 #-------------------------------
