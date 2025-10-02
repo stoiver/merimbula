@@ -12,7 +12,7 @@ weeds = True
 canal = True
 depth_canal = 4
 
-simulation_dir           = 'combined'
+simulation_dir = 'combined'
 
 sec = 1.0
 min = 60*sec
