@@ -2,7 +2,7 @@
 """
 
 mesh_size = 10785
-#mesh_size = '17540_refined' # currently problem with these meshes 
+mesh_size = '17156' # currently problem with these meshes 
 #mesh_size = 43200
 
 #model_date = 'sept_2003'
