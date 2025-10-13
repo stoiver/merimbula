@@ -158,9 +158,10 @@ domain.set_timezone('Australia/Sydney')
 #  elsewhere reflective
 #--------------------------------------
 Br = anuga.Reflective_boundary(domain)
-Bt = anuga.Transmissive_n_momentum_zero_t_momentum_set_stage_boundary(domain, function = tide_function)
+#Bt = anuga.Transmissive_n_momentum_zero_t_momentum_set_stage_boundary(domain, function = tide_function)
+Bf = anuga.Flather_external_stage_zero_velocity_boundary(domain, function = tide_function)
 
-domain.set_boundary({'exterior': Br, 'open': Bt})
+domain.set_boundary({'exterior': Br, 'open': Bf})
 
 
 #-------------------------------
