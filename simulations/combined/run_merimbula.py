@@ -170,8 +170,15 @@ import time
 t0 = time.time()
 
 
+import numpy as np
+p0 = np.array([761052.7, 5912151.0])
+p1 = np.array([759608.8, 5912326.0])
+
+x0 = 0.5*(p0[0]+p1[0])
+y0 = 0.5*(p0[1]+p1[1])
+
 try:
-    tid = domain.get_triangle_containing_point([ 760951.44544767, 5912173.85974667])
+    tid = domain.get_triangle_containing_point([ x0-9, y0+6])
 except:
     tid = None
 
