@@ -1,12 +1,12 @@
 """Common filenames for Merimbula simulation
 """
 
-mesh_size = 10785
-mesh_size = '17156' # currently problem with these meshes 
-#mesh_size = 43200
+#mesh_size = 10785
+#mesh_size = '17156' # currently problem with these meshes 
+mesh_size = 43200
 
-#model_date = 'sept_2003'
-model_date = 'sept_2004'
+model_date = 'sept_2003'
+#model_date = 'sept_2004'
 
 weeds = True
 canal = True
@@ -19,9 +19,9 @@ min = 60*sec
 hr  = 60*min
 day = 24*hr
 
-yieldstep  = 5*min
-outputstep = 15*min
-duration   = 30*min
+yieldstep  = 10*sec
+outputstep = 5*min
+duration   = 5*day
 
 
 #------------------------------------
