@@ -143,16 +143,6 @@ tide_df = pd.read_csv(project.boundary_filename)
 tide_function = interp1d(tide_df['timestamp'], tide_df['Stage'], kind='linear', fill_value=0.0, bounds_error=False)
 
 
-#-------------------------------------------------------
-# Set the start time of the simulation to the first time in the tide data
-#-------------------------------------------------------
-domain.set_starttime(tide_df['timestamp'].iloc[0])
-domain.set_timezone('Australia/Sydney')
-
-# This is 26th October 2003 01:45:00, just before change from 
-# AEST (UTC+10) to AEDT (UTC+11  at 2am)
-# domain.set_starttime(tide_df['timestamp'].iloc[3271])
-
 #--------------------------------------
 #  Boundaries, open boundary with tide
 #  elsewhere reflective
@@ -162,13 +152,19 @@ Bf = anuga.Flather_external_stage_zero_velocity_boundary(domain, function = tide
 
 domain.set_boundary({'exterior': Br, 'open': Bf})
 
+#-------------------------------------------------------
+# Set the start time of the simulation to the first time in the tide data
+#-------------------------------------------------------
+domain.set_starttime(tide_df['timestamp'].iloc[0])
+domain.set_timezone('Australia/Sydney')
+
+# 26th October 2003 01:45:00, just before change from 
+# AEST (UTC+10) to AEDT (UTC+11  at 2am)
+# domain.set_starttime(tide_df['timestamp'].iloc[3271])
 
 #-------------------------------
-# Evolve
+# Find a triangle next to mid point of tide boundary
 #-------------------------------
-import time
-t0 = time.time()
-
 
 import numpy as np
 p0 = np.array([761052.7, 5912151.0])
@@ -182,11 +178,16 @@ try:
 except:
     tid = None
 
-print (f'Triangle id next to middle of tide: {tid}')
+print (f'Triangle id next to middle of tide boundary: {tid}')
 #print (domain.centroid_coordinates[9433])
 
 anuga.barrier()
 
+#-------------------------------
+# Evolve
+#-------------------------------
+import time
+t0 = time.time()
 
 if anuga.myid == 0:
     import os
