@@ -25,10 +25,13 @@ duration   = 5*day
 
 
 
+
 #------------------------------------
 # No need to edit below this line
 #------------------------------------
 import anuga
+
+georef = anuga.Geo_reference(zone = 55,  hemisphere = 'southern')
 
 from datetime import datetime
 now = datetime.now() # current date and time

@@ -31,6 +31,7 @@ if anuga.myid == 0:
 
     domain.set_name(project.simulation_name)
     domain.check_integrity()
+    domain.set_georeference(project.georef)
 
     print ('Number of triangles = ', len(domain))
     print ('The extent is ', domain.get_extent())
