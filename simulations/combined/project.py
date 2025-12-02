@@ -1,8 +1,10 @@
 """Common filenames for Merimbula simulation
 """
 
+import os
+
 #mesh_size = 10785
-#mesh_size = '17156' # currently problem with these meshes 
+#mesh_size = 17156 # currently problem with these meshes 
 mesh_size = 43200
 
 model_date = 'sept_2003'
@@ -12,7 +14,7 @@ weeds = True
 canal = True
 depth_canal = 4
 
-simulation_dir = 'combined'
+simulation_dir = os.path.dirname(os.path.abspath(__file__))
 
 sec = 1.0
 min = 60*sec
