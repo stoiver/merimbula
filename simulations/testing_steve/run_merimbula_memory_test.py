@@ -190,14 +190,15 @@ for t in domain.evolve(yieldstep = yieldstep, finaltime = finaltime):
         print (domain.timestepping_statistics(datetime = True))
 
     # This only happens on processor that owns the triangle.
-    if tid is not None:
-        print (f'    P_{anuga.myid}: Tide {tide_function(t)[0]:.3f}, Mid Boundary Stage {domain.get_quantity("stage").centroid_values[tid]:.3f} and memory is {mem()}')
+    #if tid is not None:
+    #    print (f'    P_{anuga.myid}: Tide {tide_function(t)[0]:.3f}, Mid Boundary Stage {domain.get_quantity("stage").centroid_values[tid]:.3f} and memory is {mem()}')
         
-    
-    current, peak = tracemalloc.get_traced_memory()
-    print(f"    P_{anuga.myid}: TRACEMALLOC current={current/1e6:.2f}MB peak={peak/1e6:.2f}MB")
-    sys.stdout.flush()
-    anuga.barrier()
+    if anuga.myid == 0:
+        current, peak = tracemalloc.get_traced_memory()
+        print(f"    P_{anuga.myid}: TRACEMALLOC current={current/1e6:.2f}MB peak={peak/1e6:.2f}MB")
+        print(f"    P_{anuga.myid}: Memory usage: {mem():.6f} MB")
+        sys.stdout.flush()
+
 
 anuga.barrier()
 
