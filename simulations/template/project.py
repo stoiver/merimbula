@@ -4,7 +4,7 @@
 import os
 
 #mesh_size = 10785
-#mesh_size = 17156
+mesh_size = 17156
 #mesh_size = 19251
 #mesh_size = 43200
 #mesh_size = 86370
