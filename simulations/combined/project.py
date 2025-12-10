@@ -14,7 +14,7 @@ weeds = True
 canal = True
 depth_canal = 4
 
-simulation_dir = os.path.dirname(os.path.abspath(__file__))
+simulation_dir = os.path.basename(os.path.abspath(os.path.dirname(__file__)))
 
 sec = 1.0
 min = 60*sec
