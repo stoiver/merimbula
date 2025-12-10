@@ -4,10 +4,10 @@
 import os
 
 #mesh_size = 10785
-#mesh_size = 17156 # currently problem with these meshes 
-mesh_size = 19251
+#mesh_size = 17156
+#mesh_size = 19251
 #mesh_size = 43200
-mesh_size = 86370
+#mesh_size = 86370
 
 model_date = 'sept_2003'
 #model_date = 'sept_2004'
