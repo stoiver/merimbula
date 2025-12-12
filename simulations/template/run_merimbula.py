@@ -33,6 +33,7 @@ if anuga.myid == 0:
     domain.check_integrity()
     domain.set_georeference(project.georef)
 
+
     print ('Number of triangles = ', len(domain))
     print ('The extent is ', domain.get_extent())
 
@@ -67,12 +68,12 @@ domain = anuga.distribute(domain)
 # Setup domain runtime parameters
 #-------------------------------
 
-domain.store = True    #Store for visualisation purposes
-domain.smooth = False
-domain.set_low_froude(1)
-domain.set_flow_algorithm('DE1')
+domain.store = project.store   #Store for visualisation purposes
+domain.smooth = project.store_vertices_uniquely
+domain.set_low_froude(project.low_froude)
+domain.set_flow_algorithm(project.flow_algorithm)
 try:
-    domain.set_multiprocessor_mode(1)
+    domain.set_multiprocessor_mode(project.multiprocessor_mode)
 except:
     pass
 

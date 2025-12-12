@@ -16,26 +16,31 @@ weeds = True
 canal = True
 depth_canal = 4
 
-simulation_dir = os.path.basename(os.path.abspath(os.path.dirname(__file__)))
+# domain simulation parameters
+store = True
+store_vertices_uniquely = True
+low_froude = 1
+flow_algorithm = 'DE1'
+multiprocessor_mode = 1
 
-print(f'Simulation directory: {simulation_dir}')
 
 sec = 1.0
 min = 60*sec
 hr  = 60*min
 day = 24*hr
 
+# evolution of simulation parameters
 yieldstep  = 10*sec
 outputstep = 5*min
 duration   = 10*min #5*day
 
-
-
-
-#------------------------------------
+#----------------------------------------------------------------
 # No need to edit below this line
-#------------------------------------
+#----------------------------------------------------------------
 import anuga
+
+simulation_dir = os.path.basename(os.path.abspath(os.path.dirname(__file__)))
+print(f'Simulation directory: {simulation_dir}')
 
 georef = anuga.Geo_reference(zone = 55,  hemisphere = 'southern')
 
