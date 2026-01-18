@@ -4,16 +4,17 @@
 import os
 
 #mesh_size = 10785
-mesh_size = 17156
+#mesh_size = 17156
 #mesh_size = 19251
-#mesh_size = 43200
+mesh_size = 43200
 #mesh_size = 86370
 
 model_date = 'sept_2003'
 #model_date = 'sept_2004'
 
+global_friction = 0.015
 weeds = True
-canal = True
+canal = False
 depth_canal = 4
 
 # domain simulation parameters
@@ -30,9 +31,9 @@ hr  = 60*min
 day = 24*hr
 
 # evolution of simulation parameters
-yieldstep  = 10*sec
+yieldstep  = 30*sec
 outputstep = 5*min
-duration   = 10*min #5*day
+duration   = 5*min #5*day
 
 #----------------------------------------------------------------
 # No need to edit below this line

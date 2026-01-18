@@ -6,6 +6,7 @@ Main meribula script using new interface
 # Module imports
 #-------------------------------
 import sys, os
+import numpy as np
 
 import pandas as pd
 from scipy.interpolate import interp1d
@@ -49,14 +50,30 @@ if anuga.myid == 0:
 
     print (bathymetry_filename)
 
-    domain.set_quantity('elevation',
-                        filename = bathymetry_filename,
-                        alpha = 0.5,
-                        verbose = True,
-                        use_cache = True)
+    # domain.set_quantity('elevation',
+    #                     filename = bathymetry_filename,
+    #                     alpha = 0.5,
+    #                     verbose = True,
+    #                     use_cache = True)
+
+    basename = project.bathymetry_filename[:-4]
+    print('TRYING TO READ %s' % basename+'.npy')
+    try:
+        elev_xyz = np.load(basename+'.npy')
+    except:
+        print('TRYING TO READ %s' % basename+'.xya')
+        elev_xyz = np.genfromtxt(fname=basename+'.xya', delimiter=',', skip_header=1)
+        print('SAVING %s' % basename+'.npy')
+        np.save(basename+'.npy', elev_xyz)
+
+    print('CREATING nearest neighbour interpolator')
+    from anuga.utilities.quantity_setting_functions import make_nearestNeighbour_quantity_function
+    elev_fun_wrapper = make_nearestNeighbour_quantity_function(elev_xyz, domain, k_nearest_neighbours=3, method='min')
+    
+    print('FITTING to domain')
+    domain.set_quantity('elevation', elev_fun_wrapper, location='centroids')
 
     #domain.set_quantity('elevation',expression='elevation +%f' %elevation_offset)
-    #domain.set_quantity('friction', 0.01)
     domain.set_quantity('stage', 0.0)
 
 else:
@@ -72,6 +89,7 @@ domain.store = project.store   #Store for visualisation purposes
 domain.smooth = project.store_vertices_uniquely
 domain.set_low_froude(project.low_froude)
 domain.set_flow_algorithm(project.flow_algorithm)
+domain.set_quantity('friction', project.global_friction)
 try:
     domain.set_multiprocessor_mode(project.multiprocessor_mode)
 except:
