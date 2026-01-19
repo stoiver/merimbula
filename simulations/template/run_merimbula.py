@@ -198,8 +198,9 @@ try:
 except:
     tid = None
 
-print (f'Triangle id next to middle of tide boundary: {tid}')
-#print (domain.centroid_coordinates[9433])
+if tid is not None:
+    print (f'Triangle id next to middle of tide boundary: {tid}')
+    #print (domain.centroid_coordinates[9433])
 
 anuga.barrier()
 
@@ -232,13 +233,17 @@ if anuga.myid == 0:
 # Main Evolve Loop
 #===========================================================================
 
+
+
 for t in domain.evolve(yieldstep = yieldstep, outputstep = outputstep, duration = duration):
-        
+
+    #domain.print_timestepping_statistics(datetime = True) 
+    #progress_bar_with_eta(t,domain.finaltime, domain.evolve_starttime)
     # This only happens on processor that owns the triangle.
     if tid is not None:
-        print (domain.timestepping_statistics(datetime = True))
+        print(domain.timestepping_statistics(datetime = True))
         print (f'    Tide {tide_function(t):.3f}, Mid Boundary Stage {domain.get_quantity("stage").centroid_values[tid]:.3f} ')
-        sys.stdout.flush()
+        #sys.stdout.flush()
 
 anuga.barrier()
 

@@ -33,7 +33,7 @@ day = 24*hr
 # evolution of simulation parameters
 yieldstep  = 30*sec
 outputstep = 5*min
-duration   = 5*min #5*day
+duration   = 10*min #5*day
 
 #----------------------------------------------------------------
 # No need to edit below this line
