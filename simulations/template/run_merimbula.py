@@ -35,8 +35,8 @@ if anuga.myid == 0:
     domain.set_georeference(project.georef)
 
 
-    print ('Number of triangles = ', len(domain))
-    print ('The extent is ', domain.get_extent())
+    print (f'Number of triangles = ', len(domain))
+    print (f'The extent is ', domain.get_extent())
 
 
     #-------------------------------
@@ -234,6 +234,8 @@ if anuga.myid == 0:
 #===========================================================================
 
 
+print(domain.tri_l2g.size, anuga.myid)
+print(domain.node_l2g.size, anuga.myid)
 
 for t in domain.evolve(yieldstep = yieldstep, outputstep = outputstep, duration = duration):
 
