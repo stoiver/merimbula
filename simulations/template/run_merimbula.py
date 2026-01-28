@@ -233,10 +233,6 @@ if anuga.myid == 0:
 # Main Evolve Loop
 #===========================================================================
 
-
-print(domain.tri_l2g.size, anuga.myid)
-print(domain.node_l2g.size, anuga.myid)
-
 for t in domain.evolve(yieldstep = yieldstep, outputstep = outputstep, duration = duration):
 
     #domain.print_timestepping_statistics(datetime = True) 
