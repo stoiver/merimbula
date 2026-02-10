@@ -8,6 +8,7 @@ import os
 #mesh_size = 19251
 mesh_size = 43200
 #mesh_size = 86370
+#mesh_size = 346671
 
 model_date = 'sept_2003'
 #model_date = 'sept_2004'
