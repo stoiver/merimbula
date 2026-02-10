@@ -90,10 +90,7 @@ domain.smooth = project.store_vertices_uniquely
 domain.set_low_froude(project.low_froude)
 domain.set_flow_algorithm(project.flow_algorithm)
 domain.set_quantity('friction', project.global_friction)
-try:
-    domain.set_multiprocessor_mode(project.multiprocessor_mode)
-except:
-    pass
+
 
 
 print (f'Stats for domain on rank {anuga.myid}')
@@ -182,6 +179,13 @@ domain.set_timezone('Australia/Sydney')
 # AEST (UTC+10) to AEDT (UTC+11  at 2am)
 # domain.set_starttime(tide_df['timestamp'].iloc[3271])
 
+#--------------------------------
+# Set multiprocessor mode after setting boundaries
+#--------------------------------
+try:
+    domain.set_multiprocessor_mode(project.multiprocessor_mode)
+except:
+    pass
 #-------------------------------
 # Find a triangle next to mid point of tide boundary
 #-------------------------------
