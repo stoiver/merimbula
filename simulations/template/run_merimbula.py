@@ -89,6 +89,7 @@ domain.store = project.store   #Store for visualisation purposes
 domain.smooth = project.store_vertices_uniquely
 domain.set_low_froude(project.low_froude)
 domain.set_flow_algorithm(project.flow_algorithm)
+domain.set_cfl(project.cfl)
 domain.set_quantity('friction', project.global_friction)
 
 

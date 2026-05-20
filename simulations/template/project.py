@@ -3,10 +3,10 @@
 
 import os
 
-#mesh_size = 10785
+mesh_size = 10785
 #mesh_size = 17156
 #mesh_size = 19251
-mesh_size = 43200
+#mesh_size = 43200
 #mesh_size = 86370
 #mesh_size = 346671
 
@@ -22,8 +22,9 @@ depth_canal = 4
 store = True
 store_vertices_uniquely = True
 low_froude = 1
-flow_algorithm = 'DE1'
+flow_algorithm = 'DE_ader2' #'DE_ader2' #'DE1' # DE0
 multiprocessor_mode = 1
+cfl = 1.0
 
 
 sec = 1.0
